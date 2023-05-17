@@ -58,12 +58,13 @@ const Home = () => {
         mapContainerStyle={{ width: "800px", height: "800px" }}
         onLoad={() => console.log("Map Component Loaded...")}
       >
-        {locations.map((location) => (
+        {locations.map((location, i) => (
           <MarkerF
             position={{
               lat: Number(location.latitude),
               lng: Number(location.longitude),
             }}
+            key={i}
             title={location.applicant}
             onLoad={() => console.log("Marker Loaded")}
           />
