@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import Map from "./Map";
+import Map from "./Map.js";
 import styles from "../styles/Home.module.css";
 
 const Home = () => {
