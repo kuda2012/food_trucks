@@ -1,7 +1,4 @@
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
+import usePlacesAutocomplete from "use-places-autocomplete";
 import styles from "../styles/Home.module.css";
 import { useState } from "react";
 

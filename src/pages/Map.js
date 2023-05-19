@@ -6,7 +6,6 @@ import {
   InfoWindowF,
   Circle,
 } from "@react-google-maps/api";
-import axios from "axios";
 import { useMemo, useEffect, useState } from "react";
 import PlacesAutocomplete from "./AutoCompleteSearch.js";
 import {
@@ -71,7 +70,21 @@ const Map = () => {
         mapTypeId={"roadmap"}
         mapContainerStyle={{ width: "100%", height: "100vh" }}
         onDblClick={onMapClick}
+        options={{ disableDoubleClickZoom: true }}
       >
+        <Circle
+          center={currentLocation}
+          title={description}
+          radius={2414.02}
+          options={{ clickable: false }}
+        ></Circle>
+        <MarkerF
+          position={currentLocation}
+          title={description}
+          icon={{
+            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+          }}
+        ></MarkerF>
         {foodTruckLocations.map((location, i) => (
           <Marker
             position={{
@@ -106,21 +119,6 @@ const Map = () => {
             )}
           </Marker>
         ))}
-        <>
-          <MarkerF
-            position={currentLocation}
-            title={description}
-            icon={{
-              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-            }}
-          ></MarkerF>
-          <Circle
-            center={currentLocation}
-            title={description}
-            radius={2414.02}
-            clickable={false}
-          ></Circle>
-        </>
       </GoogleMap>
     </>
   );
