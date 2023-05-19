@@ -4,6 +4,7 @@ import {
   MarkerF,
   Marker,
   InfoWindowF,
+  Circle,
 } from "@react-google-maps/api";
 import axios from "axios";
 import { useMemo, useEffect, useState } from "react";
@@ -103,6 +104,11 @@ const Map = () => {
               url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
             }}
           ></MarkerF>
+          <Circle
+            center={currentLocation}
+            title={description}
+            radius={2414.02}
+          ></Circle>
         </>
       </GoogleMap>
     </>
