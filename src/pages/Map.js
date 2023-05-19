@@ -19,6 +19,7 @@ const Map = () => {
   const [currentSearchedPlacedId, setCurrentSearchedPlacedId] =
     useState(undefined);
   const [currentLocation, setCurrentLocation] = useState(undefined);
+  const [description, setDescription] = useState(undefined);
   useEffect(() => {
     if (foodTruckLocations.length == 0) {
       fetchFoodTruckLocations();
@@ -53,11 +54,13 @@ const Map = () => {
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
+  console.log(description);
   return (
     <>
       <div className={styles.sidebar}>
         <PlacesAutocomplete
           setCurrentSearchedPlacedId={setCurrentSearchedPlacedId}
+          setDescription={setDescription}
         />
       </div>
 
@@ -79,15 +82,15 @@ const Map = () => {
             onLoad={() => console.log("Marker Loaded")}
           />
         ))}
-        {/* {currentLocation && (
-          <>
-            <Circle
-              center={currentLocation}
-              radius={2500}
-              onLoad={() => setCurrentLocation(currentLocation)}
-            />
-          </>
-        )} */}
+        <>
+          <MarkerF
+            position={currentLocation}
+            title={description}
+            icon={{
+              url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+            }}
+          />
+        </>
       </GoogleMap>
     </>
   );
