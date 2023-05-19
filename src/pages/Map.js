@@ -19,9 +19,11 @@ const Map = () => {
   const [currentSearchedPlacedId, setCurrentSearchedPlacedId] = useState();
   const [currentLocation, setCurrentLocation] = useState();
   useEffect(() => {
-    fetchFoodTruckLocations();
+    if (foodTruckLocations.length == 0) {
+      fetchFoodTruckLocations();
+    }
     fetchCurrentLocation();
-  }, [currentSearchedPlacedId]);
+  });
 
   const fetchFoodTruckLocations = () => {
     axios(
