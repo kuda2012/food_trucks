@@ -8,7 +8,10 @@ import {
 import axios from "axios";
 import { useMemo, useEffect, useState } from "react";
 import PlacesAutocomplete from "./AutoCompleteSearch.js";
-import { getGeoPosition } from "../helpers/getGeoPosition.js";
+import {
+  getGeoPosition,
+  fetchFoodTruckLocations,
+} from "../helpers/fetchers.js";
 import styles from "../styles/Home.module.css";
 
 const Map = () => {
@@ -25,23 +28,10 @@ const Map = () => {
   });
   useEffect(() => {
     if (foodTruckLocations.length == 0) {
-      fetchFoodTruckLocations();
+      fetchFoodTruckLocations(setFoodTruckLocations);
     }
     fetchCurrentLocation();
   }, [currentSearchedPlacedId]);
-  const fetchFoodTruckLocations = () => {
-    axios(
-      "https://data.sfgov.org/resource/rqzj-sfat.json?$select=applicant,status,address,fooditems,latitude,longitude&status=APPROVED&FacilityType=Truck",
-      {
-        method: "GET",
-        headers: {
-          "X-App-Token": process.env.NEXT_PUBLIC_SF_DATA_TOKEN,
-        },
-      }
-    ).then((response) => {
-      setFoodTruckLocations(response.data);
-    });
-  };
 
   const fetchCurrentLocation = async () => {
     if (currentSearchedPlacedId) {

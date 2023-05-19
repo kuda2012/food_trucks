@@ -53,7 +53,7 @@ const PlacesAutocomplete = ({
         className={styles.autocompleteInput}
         disabled={!ready}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="123 Stairway To Heaven"
+        placeholder="1600 Pennsylvania Avenue"
       />
 
       {status === "OK" && (
