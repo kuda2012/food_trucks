@@ -30,14 +30,13 @@ const Map = () => {
     if (foodTruckLocations.length == 0) {
       fetchFoodTruckLocations(setFoodTruckLocations);
     }
-    fetchCurrentLocation();
-  }, [currentSearchedPlacedId]);
-
-  const fetchCurrentLocation = async () => {
-    if (currentSearchedPlacedId) {
-      setCurrentLocation(await getGeoPosition(currentSearchedPlacedId));
+    async function fetchCurrentLocation() {
+      if (currentSearchedPlacedId) {
+        setCurrentLocation(await getGeoPosition(currentSearchedPlacedId));
+      }
     }
-  };
+    fetchCurrentLocation();
+  }, [currentSearchedPlacedId, foodTruckLocations.length]);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_TOKEN,
