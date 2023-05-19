@@ -24,8 +24,7 @@ const Map = () => {
       fetchFoodTruckLocations();
     }
     fetchCurrentLocation();
-  });
-
+  }, [currentSearchedPlacedId]);
   const fetchFoodTruckLocations = () => {
     axios(
       "https://data.sfgov.org/resource/rqzj-sfat.json?$select=applicant,status,address,fooditems,latitude,longitude&status=APPROVED",
