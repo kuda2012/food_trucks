@@ -12,7 +12,7 @@ import { getGeoPosition } from "../helpers/getGeoPosition.js";
 import styles from "../styles/Home.module.css";
 
 const Map = () => {
-  const libraries = useMemo(() => ["places"], []);
+  const [libraries] = useState(["places"]);
   const mapCenter = useMemo(() => ({ lat: 37.7749, lng: -122.431297 }), []);
   const [foodTruckLocations, setFoodTruckLocations] = useState([]);
   const [currentSearchedPlacedId, setCurrentSearchedPlacedId] =
@@ -35,7 +35,7 @@ const Map = () => {
       {
         method: "GET",
         headers: {
-          "X-App-Token": "fg85kSClVPGeOIDARCVa1XNIx",
+          "X-App-Token": process.env.NEXT_PUBLIC_SF_DATA_TOKEN,
         },
       }
     ).then((response) => {
@@ -50,7 +50,7 @@ const Map = () => {
   };
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDUn5s7mKCW6Hwq2gUlHT00sRDCzp860pU",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_TOKEN,
     libraries,
   });
 
@@ -81,11 +81,10 @@ const Map = () => {
             key={i}
             title={location.applicant}
             snippet={location.fooditems}
-            onLoad={() => console.log("Marker Loaded")}
             onClick={() => {
               setShowInfoWindow((windowInfo) => {
                 return {
-                  number: i,
+                  number: windowInfo.showing ? null : i,
                   showing: i === windowInfo.number ? !windowInfo.showing : true,
                 };
               });
@@ -94,7 +93,9 @@ const Map = () => {
             {showInfoWindow.number === i && showInfoWindow.showing && (
               <InfoWindowF
                 onCloseClick={() => {
-                  setShowInfoWindow({ number: null, showing: false });
+                  setShowInfoWindow(() => {
+                    return { number: null, showing: false };
+                  });
                 }}
               >
                 <div>
