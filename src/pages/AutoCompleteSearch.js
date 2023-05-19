@@ -3,6 +3,7 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 import styles from "../styles/Home.module.css";
+import { useState } from "react";
 
 const PlacesAutocomplete = ({
   onAddressSelect,
@@ -21,6 +22,7 @@ const PlacesAutocomplete = ({
     cache: 86400,
   });
 
+  const [explainRadiusCircle, setExplainRadiusCircle] = useState(false);
   const renderSuggestions = () => {
     return data.map((suggestion) => {
       const {
@@ -38,6 +40,7 @@ const PlacesAutocomplete = ({
             onAddressSelect && onAddressSelect(description);
             setCurrentSearchedPlacedId(place_id);
             setDescription(description);
+            setExplainRadiusCircle(true);
           }}
         >
           <strong>{main_text}</strong> <small>{secondary_text}</small>
@@ -61,10 +64,12 @@ const PlacesAutocomplete = ({
           <ul className={styles.suggestionWrapper}>{renderSuggestions()}</ul>
         </>
       )}
-      <h2 style={{ color: "white", marginTop: "40px", marginLeft: "20px" }}>
-        If food truck is within the circle, the location is within 1.5 miles of
-        your searched location
-      </h2>
+      {explainRadiusCircle && (
+        <h2 style={{ color: "white", marginTop: "40px", marginLeft: "20px" }}>
+          If the food truck is within the circle, it is within 1.5 miles of your
+          searched location
+        </h2>
+      )}
     </div>
   );
 };
