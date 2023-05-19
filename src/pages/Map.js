@@ -73,7 +73,8 @@ const Map = () => {
             onClick={() => {
               setShowInfoWindow((windowInfo) => {
                 return {
-                  number: windowInfo.showing ? null : i,
+                  number:
+                    i === windowInfo.number && windowInfo.showing ? null : i,
                   showing: i === windowInfo.number ? !windowInfo.showing : true,
                 };
               });
