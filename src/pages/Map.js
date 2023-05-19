@@ -9,15 +9,16 @@ import {
 import axios from "axios";
 import { useMemo, useEffect, useState } from "react";
 import PlacesAutocomplete from "./AutoCompleteSearch.js";
-import getGeoPosition from "./getGeoPosition.js";
+import { getGeoPosition } from "../helpers/getGeoPosition.js";
 import styles from "../styles/Home.module.css";
 
 const Map = () => {
   const libraries = useMemo(() => ["places"], []);
   const mapCenter = useMemo(() => ({ lat: 37.7749, lng: -122.431297 }), []);
   const [foodTruckLocations, setFoodTruckLocations] = useState([]);
-  const [currentSearchedPlacedId, setCurrentSearchedPlacedId] = useState();
-  const [currentLocation, setCurrentLocation] = useState();
+  const [currentSearchedPlacedId, setCurrentSearchedPlacedId] =
+    useState(undefined);
+  const [currentLocation, setCurrentLocation] = useState(undefined);
   useEffect(() => {
     if (foodTruckLocations.length == 0) {
       fetchFoodTruckLocations();
