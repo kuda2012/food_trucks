@@ -7,7 +7,6 @@ import styles from "../styles/Home.module.css";
 const PlacesAutocomplete = ({
   onAddressSelect,
   setCurrentSearchedPlacedId,
-  setShowCircles,
 }) => {
   const {
     ready,
@@ -36,7 +35,6 @@ const PlacesAutocomplete = ({
             setValue(description, false);
             clearSuggestions();
             onAddressSelect && onAddressSelect(description);
-            setShowCircles(false);
             setCurrentSearchedPlacedId(place_id);
           }}
         >

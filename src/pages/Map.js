@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import { useMemo, useEffect, useState } from "react";
 import PlacesAutocomplete from "./AutoCompleteSearch.js";
-import useGeoPosition from "./useGeoPosition.js";
+import getGeoPosition from "./getGeoPosition.js";
 import styles from "../styles/Home.module.css";
 
 const Map = () => {
@@ -18,7 +18,6 @@ const Map = () => {
   const [foodTruckLocations, setFoodTruckLocations] = useState([]);
   const [currentSearchedPlacedId, setCurrentSearchedPlacedId] = useState();
   const [currentLocation, setCurrentLocation] = useState();
-  const [showCircles, setShowCircles] = useState(true);
   useEffect(() => {
     fetchFoodTruckLocations();
     fetchCurrentLocation();
@@ -40,8 +39,7 @@ const Map = () => {
 
   const fetchCurrentLocation = async () => {
     if (currentSearchedPlacedId) {
-      setCurrentLocation(await useGeoPosition(currentSearchedPlacedId));
-      setShowCircles(true);
+      setCurrentLocation(await getGeoPosition(currentSearchedPlacedId));
     }
   };
 
@@ -53,18 +51,16 @@ const Map = () => {
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
-  console.log("render", showCircles, currentLocation, foodTruckLocations);
   return (
     <>
       <div className={styles.sidebar}>
         <PlacesAutocomplete
           setCurrentSearchedPlacedId={setCurrentSearchedPlacedId}
-          setShowCircles={setShowCircles}
         />
       </div>
 
       <GoogleMap
-        zoom={currentLocation ? 14 : 13}
+        zoom={currentLocation ? 15 : 13}
         center={currentLocation ? currentLocation : mapCenter}
         mapTypeId={"roadmap"}
         mapContainerStyle={{ width: "100%", height: "100vh" }}
@@ -81,7 +77,7 @@ const Map = () => {
             onLoad={() => console.log("Marker Loaded")}
           />
         ))}
-        {/* {currentLocation && showCircles && (
+        {/* {currentLocation && (
           <>
             <Circle
               center={currentLocation}
