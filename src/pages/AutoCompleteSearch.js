@@ -9,6 +9,7 @@ const PlacesAutocomplete = ({
   onAddressSelect,
   setCurrentSearchedPlacedId,
   setDescription,
+  currentLocation,
 }) => {
   const {
     ready,
@@ -23,6 +24,10 @@ const PlacesAutocomplete = ({
   });
 
   const [explainRadiusCircle, setExplainRadiusCircle] = useState(false);
+
+  if (currentLocation && !explainRadiusCircle) {
+    setExplainRadiusCircle(true);
+  }
   const renderSuggestions = () => {
     return data.map((suggestion) => {
       const {
@@ -64,6 +69,9 @@ const PlacesAutocomplete = ({
           <ul className={styles.suggestionWrapper}>{renderSuggestions()}</ul>
         </>
       )}
+      <h3 style={{ color: "white", marginTop: "40px", marginLeft: "10px" }}>
+        Double click to drop a pin
+      </h3>
       {explainRadiusCircle && (
         <h2 style={{ color: "white", marginTop: "40px", marginLeft: "20px" }}>
           If the food truck is within the circle, it is within 1.5 miles of your

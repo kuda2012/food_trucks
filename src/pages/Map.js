@@ -27,6 +27,14 @@ const Map = () => {
     number: null,
     showing: false,
   });
+
+  const onMapClick = (e) => {
+    setCurrentLocation({
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng(),
+    });
+  };
+
   useEffect(() => {
     if (foodTruckLocations.length == 0) {
       fetchFoodTruckLocations(setFoodTruckLocations);
@@ -53,6 +61,7 @@ const Map = () => {
         <PlacesAutocomplete
           setCurrentSearchedPlacedId={setCurrentSearchedPlacedId}
           setDescription={setDescription}
+          currentLocation={currentLocation}
         />
       </div>
 
@@ -61,6 +70,7 @@ const Map = () => {
         center={currentLocation ? currentLocation : mapCenter}
         mapTypeId={"roadmap"}
         mapContainerStyle={{ width: "100%", height: "100vh" }}
+        onDblClick={onMapClick}
       >
         {foodTruckLocations.map((location, i) => (
           <Marker
@@ -108,6 +118,7 @@ const Map = () => {
             center={currentLocation}
             title={description}
             radius={2414.02}
+            clickable={false}
           ></Circle>
         </>
       </GoogleMap>
