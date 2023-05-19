@@ -2,9 +2,8 @@ import {
   useLoadScript,
   GoogleMap,
   MarkerF,
-  Circle,
-  CircleF,
-  DistanceMatrixService,
+  Marker,
+  InfoWindowF,
 } from "@react-google-maps/api";
 import axios from "axios";
 import { useMemo, useEffect, useState } from "react";
@@ -20,6 +19,10 @@ const Map = () => {
     useState(undefined);
   const [currentLocation, setCurrentLocation] = useState(undefined);
   const [description, setDescription] = useState(undefined);
+  const [showInfoWindow, setShowInfoWindow] = useState({
+    number: null,
+    showing: false,
+  });
   useEffect(() => {
     if (foodTruckLocations.length == 0) {
       fetchFoodTruckLocations();
@@ -54,7 +57,6 @@ const Map = () => {
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
-  console.log(description);
   return (
     <>
       <div className={styles.sidebar}>
@@ -71,7 +73,7 @@ const Map = () => {
         mapContainerStyle={{ width: "100%", height: "100vh" }}
       >
         {foodTruckLocations.map((location, i) => (
-          <MarkerF
+          <Marker
             position={{
               lat: Number(location.latitude),
               lng: Number(location.longitude),
@@ -80,7 +82,27 @@ const Map = () => {
             title={location.applicant}
             snippet={location.fooditems}
             onLoad={() => console.log("Marker Loaded")}
-          />
+            onClick={() => {
+              setShowInfoWindow((windowInfo) => {
+                return {
+                  number: i,
+                  showing: i === windowInfo.number ? !windowInfo.showing : true,
+                };
+              });
+            }}
+          >
+            {showInfoWindow.number === i && showInfoWindow.showing && (
+              <InfoWindowF
+                onCloseClick={() => {
+                  setShowInfoWindow({ number: null, showing: false });
+                }}
+              >
+                <div>
+                  <h4>{location.applicant}</h4> {location.fooditems}
+                </div>
+              </InfoWindowF>
+            )}
+          </Marker>
         ))}
         <>
           <MarkerF
@@ -89,7 +111,7 @@ const Map = () => {
             icon={{
               url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
             }}
-          />
+          ></MarkerF>
         </>
       </GoogleMap>
     </>
