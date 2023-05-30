@@ -17,6 +17,7 @@ import styles from "../styles/Home.module.css";
 const Map = () => {
   const [libraries] = useState(["places"]);
   const mapCenter = useMemo(() => ({ lat: 37.7749, lng: -122.431297 }), []);
+  const [map, setMap] = useState(null);
   const [foodTruckLocations, setFoodTruckLocations] = useState([]);
   const [currentSearchedPlacedId, setCurrentSearchedPlacedId] =
     useState(undefined);
@@ -28,10 +29,13 @@ const Map = () => {
   });
 
   const onMapClick = (e) => {
-    setCurrentLocation({
-      lat: e.latLng.lat(),
-      lng: e.latLng.lng(),
-    });
+    map.panTo(e.latLng);
+    setTimeout(() => {
+      setCurrentLocation({
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+      });
+    }, 600);
   };
 
   useEffect(() => {
@@ -71,6 +75,9 @@ const Map = () => {
         mapContainerStyle={{ width: "100%", height: "100vh" }}
         onDblClick={onMapClick}
         options={{ disableDoubleClickZoom: true }}
+        onLoad={(map) => {
+          setMap(map);
+        }}
       >
         <Circle
           center={currentLocation}
