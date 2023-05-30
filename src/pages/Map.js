@@ -44,7 +44,11 @@ const Map = () => {
     }
     async function fetchCurrentLocation() {
       if (currentSearchedPlacedId) {
-        setCurrentLocation(await getGeoPosition(currentSearchedPlacedId));
+        const locationData = await getGeoPosition(currentSearchedPlacedId);
+        map.panTo(locationData);
+        setTimeout(() => {
+          setCurrentLocation(locationData);
+        }, 600);
       }
     }
     fetchCurrentLocation();
@@ -69,7 +73,7 @@ const Map = () => {
       </div>
 
       <GoogleMap
-        zoom={currentLocation ? 15 : 13}
+        zoom={currentLocation ? 14 : 13}
         center={currentLocation ? currentLocation : mapCenter}
         mapTypeId={"roadmap"}
         mapContainerStyle={{ width: "100%", height: "100vh" }}
