@@ -1,4 +1,4 @@
-<img src="./public/snippet.PNG" width="300" height="300" />
+<img src="./public/snippet.PNG" width="533" height="300" />
 
 # Food Truck Locator
 
