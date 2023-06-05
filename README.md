@@ -1,6 +1,6 @@
 <img src="./public/snippet.PNG" width="533" height="300" />
 
-# Food Truck Locator
+# SF Food Truck Locator
 
 Hungry? Looking for Food trucks in the San Fran area and how long it would take you to get to them? Food Truck Locator's got your back.
 
